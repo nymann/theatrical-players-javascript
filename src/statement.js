@@ -1,3 +1,25 @@
+function calculate_play_type_price(perf, play) {
+    let price = 0;
+    switch (play.type) {
+        case "tragedy":
+            price = 40000;
+            if (perf.audience > 30) {
+                price += 1000 * (perf.audience - 30);
+            }
+            break;
+        case "comedy":
+            price = 30000;
+            if (perf.audience > 20) {
+                price += 10000 + 500 * (perf.audience - 20);
+            }
+            price += 300 * perf.audience;
+            break;
+        default:
+            throw new Error(`unknown type: ${play.type}`);
+    }
+    return price;
+}
+
 export function statement(invoice, plays) {
     let totalAmount = 0;
     let volumeCredits = 0;
@@ -10,26 +32,12 @@ export function statement(invoice, plays) {
 
     for (let perf of invoice.performances) {
         const play = plays[perf.playID];
-        let thisAmount = 0;
-        switch (play.type) {
-            case "tragedy":
-                thisAmount = 40000;
-                if (perf.audience > 30) {
-                    thisAmount += 1000 * (perf.audience - 30);
-                }
-                break;
-            case "comedy":
-                thisAmount = 30000;
-                if (perf.audience > 20) {
-                    thisAmount += 10000 + 500 * (perf.audience - 20);
-                }
-                thisAmount += 300 * perf.audience;
-                break;
-            default:
-                throw new Error(`unknown type: ${play.type}`);
-        }
+
+        let thisAmount = calculate_play_type_price(perf, play);
+
         // add volume credits
         volumeCredits += Math.max(perf.audience - 30, 0);
+
         // add extra credit for every ten comedy attendees
         if ("comedy" === play.type) {
             volumeCredits += Math.floor(perf.audience / 5);
