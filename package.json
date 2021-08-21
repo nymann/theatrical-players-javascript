@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/emilybache/Theatrical-Players-Refactoring-Kata",
   "devDependencies": {
+    "@babel/plugin-transform-modules-commonjs": "^7.15.0",
     "babel-cli": "^6.26.0",
     "jest": "^26.6.3"
   }

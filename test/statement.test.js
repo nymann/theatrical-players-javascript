@@ -1,5 +1,5 @@
-const statement = require('../src/statement');
-const fs=require('fs');
+import { statement } from "../src/statement"
+import fs from "fs"
 
 test('example statement', () => {
     const invoice = JSON.parse(fs.readFileSync('test/invoice.json', 'utf8'));
