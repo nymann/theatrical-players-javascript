@@ -8,9 +8,7 @@ test("example statement", () => {
 });
 
 test("statement with new play types", () => {
-    const invoice = JSON.parse(
-        fs.readFileSync("test/invoice_new_plays.json", "utf8")
-    );
+    const invoice = JSON.parse(fs.readFileSync("test/invoice_new_plays.json", "utf8"));
     const plays = JSON.parse(fs.readFileSync("test/new_plays.json", "utf8"));
     expect(() => {
         statement(invoice, plays);
